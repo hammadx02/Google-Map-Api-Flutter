@@ -27,11 +27,24 @@ class _ConvertLatLangToAddressState extends State<ConvertLatLangToAddress> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(stAddressOne),
+            Center(
+              child: Text(
+                'From Coordinates: $stAddressOne',
+                textAlign: TextAlign.center,
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
-            Text(stAddressTwo),
+            Center(
+              child: Text(
+                'From Query: $stAddressTwo',
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             GestureDetector(
               onTap: () async {
                 //from query
@@ -49,16 +62,21 @@ class _ConvertLatLangToAddressState extends State<ConvertLatLangToAddress> {
                 //     first.countryName.toString() +
                 //     first.adminArea.toString());
 
-                setState(() {
-                  stAddressOne =
-                      first.countryName.toString() + first.adminArea.toString();
-                  stAddressTwo = second.coordinates.toString();
-                });
+                setState(
+                  () {
+                    stAddressTwo = '${second.featureName} ${second.coordinates}';
+                    stAddressOne = first.countryName.toString() +
+                        " " +
+                        first.adminArea.toString() +
+                        ' ' +
+                        first.addressLine.toString();
+                  },
+                );
               },
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple,
+                  color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/convert_latlang_to_address.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
