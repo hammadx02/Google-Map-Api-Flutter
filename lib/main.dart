@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'screens/convert_latlang_to_address.dart';
+import 'screens/user_current_location.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ConvertLatLangToAddress(),
+      home: const GetUserCurrentLocationScreen(),
     );
   }
 }
