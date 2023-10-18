@@ -54,8 +54,38 @@ final List<Marker> _list = [
 
 class _GetUserCurrentLocationScreenState
     extends State<GetUserCurrentLocationScreen> {
+  loadUserCurrentLocation() {
+    _getUserCurrentLocation().then(
+      (value) async {
+        _marker.add(
+          Marker(
+            markerId: MarkerId('2'),
+            position: LatLng(value.latitude, value.latitude),
+            infoWindow: InfoWindow(
+              title: 'My location',
+            ),
+          ),
+        );
+        CameraPosition cameraPosition = CameraPosition(
+          target: LatLng(value.latitude, value.latitude),
+          zoom: 14,
+        );
+        final GoogleMapController controller = await _controller.future;
+
+        controller
+            .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+        setState(() {});
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    initState() {
+      super.initState();
+      loadUserCurrentLocation();
+    }
+
     return Scaffold(
       body: GoogleMap(
         initialCameraPosition: _kGooglePlex,
@@ -89,9 +119,7 @@ class _GetUserCurrentLocationScreenState
 
               controller.animateCamera(
                   CameraUpdate.newCameraPosition(cameraPosition));
-                  setState(() {
-                    
-                  });
+              setState(() {});
             },
           );
         },
