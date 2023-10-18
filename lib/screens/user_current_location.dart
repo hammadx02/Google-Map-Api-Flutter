@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -28,7 +30,7 @@ Future<Position> _getUserCurrentLocation() async {
   return await Geolocator.getCurrentPosition();
 }
 
- const CameraPosition _kGooglePlex = CameraPosition(
+const CameraPosition _kGooglePlex = CameraPosition(
   target: LatLng(
     34.0009,
     71.5444,
@@ -37,7 +39,7 @@ Future<Position> _getUserCurrentLocation() async {
 );
 
 final List<Marker> _marker = [];
-const List<Marker> _list = [
+final List<Marker> _list = [
   Marker(
     markerId: MarkerId('1'),
     position: LatLng(
@@ -45,7 +47,7 @@ const List<Marker> _list = [
       71.5444,
     ),
     infoWindow: InfoWindow(
-      title: 'My Location',
+      title: 'My Current Location',
     ),
   ),
 ];
@@ -55,38 +57,48 @@ class _GetUserCurrentLocationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: GoogleMap(
-          initialCameraPosition: _kGooglePlex,
-          myLocationButtonEnabled: true,
-          myLocationEnabled: true,
-          // trafficEnabled: true,
-          mapType: MapType.hybrid,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          markers: Set.of(_marker),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            GoogleMapController controller = await _controller.future;
-            controller.animateCamera(
-              CameraUpdate.newCameraPosition(
-                const CameraPosition(
-                  target: LatLng(
-                    34.0009,
-                    71.5444,
+      body: GoogleMap(
+        initialCameraPosition: _kGooglePlex,
+        myLocationButtonEnabled: true,
+        myLocationEnabled: true,
+        // trafficEnabled: true,
+        mapType: MapType.normal,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+        markers: Set<Marker>.of(_marker),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          _getUserCurrentLocation().then(
+            (value) async {
+              _marker.add(
+                Marker(
+                  markerId: MarkerId('2'),
+                  position: LatLng(value.latitude, value.latitude),
+                  infoWindow: InfoWindow(
+                    title: 'My location',
                   ),
-                  zoom: 14,
                 ),
-              ),
-            );
-            setState(() {});
-          },
-          child: const Icon(
-            Icons.location_on_rounded,
-          ),
+              );
+              CameraPosition cameraPosition = CameraPosition(
+                target: LatLng(value.latitude, value.latitude),
+                zoom: 14,
+              );
+              final GoogleMapController controller = await _controller.future;
+
+              controller.animateCamera(
+                  CameraUpdate.newCameraPosition(cameraPosition));
+                  setState(() {
+                    
+                  });
+            },
+          );
+        },
+        child: const Icon(
+          Icons.location_on_rounded,
         ),
-      )
-    ;
+      ),
+    );
   }
 }
