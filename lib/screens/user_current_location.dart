@@ -84,6 +84,7 @@ class _GetUserCurrentLocationScreenState
     initState() {
       super.initState();
       loadUserCurrentLocation();
+      _marker.addAll(_list);
     }
 
     return Scaffold(
@@ -91,7 +92,6 @@ class _GetUserCurrentLocationScreenState
         initialCameraPosition: _kGooglePlex,
         myLocationButtonEnabled: true,
         myLocationEnabled: true,
-        // trafficEnabled: true,
         mapType: MapType.normal,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
