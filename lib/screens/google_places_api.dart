@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GooglePlacesApi extends StatefulWidget {
-  const GooglePlacesApi({super.key});
+class GooglePlacesApiScreen extends StatefulWidget {
+  const GooglePlacesApiScreen({super.key});
 
   @override
-  State<GooglePlacesApi> createState() => _GooglePlacesApiState();
+  State<GooglePlacesApiScreen> createState() => _GooglePlacesApiScreenState();
 }
 
-class _GooglePlacesApiState extends State<GooglePlacesApi> {
+class _GooglePlacesApiScreenState extends State<GooglePlacesApiScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold();
