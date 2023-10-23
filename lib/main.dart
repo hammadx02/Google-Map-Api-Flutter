@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue,
       ),
       home: const GetUserCurrentLocationScreen(),
     );
