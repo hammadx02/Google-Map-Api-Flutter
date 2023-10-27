@@ -8,10 +8,10 @@ class PolygonScreen extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _PolygoneScreenState createState() => _PolygoneScreenState();
+  _PolygonScreenState createState() => _PolygonScreenState();
 }
 
-class _PolygoneScreenState extends State<PolygonScreen> {
+class _PolygonScreenState extends State<PolygonScreen> {
   final Completer<GoogleMapController> _controller = Completer();
 
   final CameraPosition _kGooglePlex = const CameraPosition(
@@ -19,7 +19,7 @@ class _PolygoneScreenState extends State<PolygonScreen> {
     zoom: 14,
   );
   final Set<Marker> _markers = {};
-  final Set<Polygon> _polygone = HashSet<Polygon>();
+  final Set<Polygon> _polygon = HashSet<Polygon>();
 
   List<LatLng> points = [
     const LatLng(9.000471, -79.495544),
@@ -40,13 +40,16 @@ class _PolygoneScreenState extends State<PolygonScreen> {
   ];
 
   void _setPolygone() {
-    _polygone.add(Polygon(
+    _polygon.add(
+      Polygon(
         polygonId: const PolygonId('1'),
         points: points,
         strokeColor: Colors.deepOrange,
         strokeWidth: 5,
         fillColor: Colors.deepOrange.withOpacity(0.1),
-        geodesic: true));
+        geodesic: true,
+      ),
+    );
   }
 
   @override
@@ -69,7 +72,7 @@ class _PolygoneScreenState extends State<PolygonScreen> {
         // )),
         //  onCameraMove: ((_position) => _updatePosition(_position)),
         markers: _markers,
-        polygons: _polygone,
+        polygons: _polygon,
 
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
