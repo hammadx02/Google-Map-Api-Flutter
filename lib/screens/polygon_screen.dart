@@ -39,7 +39,7 @@ class _PolygonScreenState extends State<PolygonScreen> {
     const LatLng(9.000471, -79.495544),
   ];
 
-  void _setPolygone() {
+  void _setPolygon() {
     _polygon.add(
       Polygon(
         polygonId: const PolygonId('1'),
@@ -55,7 +55,7 @@ class _PolygonScreenState extends State<PolygonScreen> {
   @override
   void initState() {
     super.initState();
-    _setPolygone();
+    _setPolygon();
   }
 
   @override
