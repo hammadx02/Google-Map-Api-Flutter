@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -21,6 +22,7 @@ class _CustomMarkerScreenState extends State<CustomMarkerScreen> {
     'images/marker.png',
     'images/motorcycle.png',
   ];
+  Uint8List? markerImage;
   final List<Marker> _markers = <Marker>[];
   final List<LatLng> _latLang = <LatLng>[
     const LatLng(33.6941, 72.9734),
@@ -38,9 +40,6 @@ class _CustomMarkerScreenState extends State<CustomMarkerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Customer Marker'),
-      ),
       body: SafeArea(
         child: GoogleMap(
           initialCameraPosition: _kGooglePlex,
