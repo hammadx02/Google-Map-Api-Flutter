@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'screens/user_current_location.dart';
+import 'package:google_maps_api/screens/custom_marker_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const GetUserCurrentLocationScreen(),
+      home: const CustomMarkerScreen(),
     );
   }
 }
