@@ -45,7 +45,7 @@ class _PolygonScreenState extends State<PolygonScreen> {
         polygonId: const PolygonId('1'),
         points: points,
         strokeColor: Colors.deepOrange,
-        strokeWidth: 5,
+        strokeWidth: 2,
         fillColor: Colors.deepOrange.withOpacity(0.1),
         geodesic: true,
       ),
