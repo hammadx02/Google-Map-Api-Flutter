@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_api/screens/custom_marker_info_window.dart';
 import 'package:google_maps_api/screens/polygon_screen.dart';
 
 void main() {
