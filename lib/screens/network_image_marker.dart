@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,20 +9,13 @@ class NetworkImageMarkerScreen extends StatefulWidget {
   const NetworkImageMarkerScreen({super.key});
 
   @override
-  State<NetworkImageMarkerScreen> createState() => _NetworkImageMarkerScreenState();
+  State<NetworkImageMarkerScreen> createState() =>
+      _NetworkImageMarkerScreenState();
 }
 
 class _NetworkImageMarkerScreenState extends State<NetworkImageMarkerScreen> {
   final Completer<GoogleMapController> _controller = Completer();
 
-  List<String> images = [
-    'images/car.png',
-    'images/car2.png',
-    'images/marker2.png',
-    'images/marker3.png',
-    'images/marker.png',
-    'images/motorcycle.png',
-  ];
   Uint8List? markerImage;
   final List<Marker> _markers = <Marker>[];
   final List<LatLng> _latLang = <LatLng>[
@@ -56,20 +49,57 @@ class _NetworkImageMarkerScreenState extends State<NetworkImageMarkerScreen> {
   }
 
   loadData() async {
-    for (int i = 0; i < images.length; i++) {
-      final Uint8List markerIcon = await getBytesFromAssets(images[i], 100);
+    for (int i = 0; i < _latLang.length; i++) {
+      Uint8List? image = await _loadNetworkImage(
+          'https://images.bitmoji.com/3d/avatar/201714142-99447061956_1-s5-v1.webp');
+      final ui.Codec markerImageCodec = await instantiateImageCodec(
+        image!.buffer.asUint8List(),
+        targetHeight: 100,
+        targetWidth: 100,
+      );
+      final FrameInfo frameInfo = await markerImageCodec.getNextFrame();
+      final ByteData? byteData = await frameInfo.image.toByteData(
+        format: ImageByteFormat.png,
+      );
+
+      final Uint8List resizedMarkerImageBytes = byteData!.buffer.asUint8List();
+
       _markers.add(
         Marker(
           markerId: MarkerId(
             i.toString(),
           ),
           position: _latLang[i],
-          icon: BitmapDescriptor.fromBytes(markerIcon),
-          infoWindow: const InfoWindow(title: 'Title of marker'),
+          icon: BitmapDescriptor.fromBytes(resizedMarkerImageBytes),
+          anchor: Offset(.1, .1),
+          infoWindow: InfoWindow(
+            title: 'Title of marker' + i.toString(),
+          ),
         ),
       );
       setState(() {});
     }
+  }
+
+  Future<Uint8List?> _loadNetworkImage(String path) async {
+    final completer = Completer<ImageInfo>();
+    var img = NetworkImage(path);
+    img
+        .resolve(
+          const ImageConfiguration(
+            size: Size.fromHeight(10),
+          ),
+        )
+        .addListener(
+          ImageStreamListener(
+            (info, _) => completer.complete(info),
+          ),
+        );
+    final imageInfo = await completer.future;
+    final byteData = await imageInfo.image.toByteData(
+      format: ui.ImageByteFormat.png,
+    );
+    return byteData!.buffer.asUint8List();
   }
 
   @override
