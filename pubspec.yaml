@@ -21,6 +21,7 @@ dependencies:
   geolocator: ^10.1.0
   http:
   uuid:
+  custom_info_window: ^1.0.1
 
 dev_dependencies:
   flutter_test:
