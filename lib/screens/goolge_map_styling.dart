@@ -36,7 +36,9 @@ class _GoolgeMapStylingScreenState extends State<GoolgeMapStylingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Map Styling'),
+        title: const Text(
+          'Map Styling',
+        ),
         centerTitle: true,
         actions: <Widget>[
           // This button presents popup menu items.
