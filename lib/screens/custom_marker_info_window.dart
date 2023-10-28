@@ -23,8 +23,8 @@ class _CustomMarkerInfoWindowScreenState
   final Set<Marker> _markers = {};
 
   List<String> images = [
-    'images/car.png',
-    'images/marker.png',
+    'images/location-pin.png',
+    'images/tracking.png',
   ];
 
   Uint8List? markerImage;
@@ -47,7 +47,6 @@ class _CustomMarkerInfoWindowScreenState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadData();
   }
@@ -60,7 +59,8 @@ class _CustomMarkerInfoWindowScreenState
           await getBytesFromAsset(images[i].toString(), 100);
 
       if (i == 1) {
-        _markers.add(Marker(
+        _markers.add(
+          Marker(
             markerId: const MarkerId('2'),
             position: const LatLng(33.6992, 72.9744),
             icon: BitmapDescriptor.fromBytes(markerIcon),
@@ -97,7 +97,7 @@ class _CustomMarkerInfoWindowScreenState
                                     .copyWith(
                                       color: Colors.white,
                                     ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -115,7 +115,9 @@ class _CustomMarkerInfoWindowScreenState
                 ),
                 const LatLng(33.6992, 72.9744),
               );
-            }));
+            },
+          ),
+        );
       } else {
         _markers.add(Marker(
             markerId: MarkerId(i.toString()),
@@ -140,11 +142,9 @@ class _CustomMarkerInfoWindowScreenState
                         height: 100,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                                'https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?cs=srgb&dl=pexels-narda-yescas-1566837.jpg&fm=jpg'),
-                            fit: BoxFit.fitWidth,
-                            filterQuality: FilterQuality.high,
-                          ),
+                              image: AssetImage('images/sea.jpg'),
+                              fit: BoxFit.fitWidth,
+                              filterQuality: FilterQuality.high),
                           borderRadius: BorderRadius.all(
                             Radius.circular(10.0),
                           ),
