@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -19,9 +18,9 @@ class _PolylineScreenState extends State<PolylineScreen> {
     zoom: 14,
   );
   final Set<Marker> _markers = {};
-  final Set<Polygon> _polygon = HashSet<Polygon>();
+  final Set<Polyline> _polyline = {};
 
-  List<LatLng> points = [
+  List<LatLng> latlng = [
     const LatLng(9.000471, -79.495544),
     const LatLng(8.999406, -79.495831),
     const LatLng(8.998838, -79.494680),
@@ -39,23 +38,31 @@ class _PolylineScreenState extends State<PolylineScreen> {
     const LatLng(9.000471, -79.495544),
   ];
 
-  void _setPolygon() {
-    _polygon.add(
-      Polygon(
-        polygonId: const PolygonId('1'),
-        points: points,
-        strokeColor: Colors.deepOrange,
-        strokeWidth: 2,
-        fillColor: Colors.deepOrange.withOpacity(0.1),
-        geodesic: true,
-      ),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
-    _setPolygon();
+
+    for (int i = 0; i < latlng.length; i++) {
+      _markers.add(
+        Marker(
+          markerId: MarkerId(
+            i.toString(),
+          ),
+          position: latlng[i],
+          icon: BitmapDescriptor.defaultMarker,
+          infoWindow: const InfoWindow(title: 'Title of marker'),
+        ),
+      );
+      setState(() {});
+
+      _polyline.add(
+        Polyline(
+          polylineId: const PolylineId('1'),
+          points: latlng,
+          color: Colors.blueAccent,
+        ),
+      );
+    }
   }
 
   @override
@@ -66,14 +73,7 @@ class _PolylineScreenState extends State<PolylineScreen> {
         initialCameraPosition: _kGooglePlex,
         myLocationButtonEnabled: true,
         myLocationEnabled: false,
-        // cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-        //   northeast: LatLng(9.006808, -79.508148),
-        //   southwest:  LatLng(9.003121, -79.505702),
-        // )),
-        //  onCameraMove: ((_position) => _updatePosition(_position)),
         markers: _markers,
-        polygons: _polygon,
-
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
