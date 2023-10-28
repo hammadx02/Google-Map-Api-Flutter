@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_maps_api/screens/polyline_screen.dart';
+import 'package:google_maps_api/screens/goolge_map_styling.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PolylineScreen(),
+      home: const GoolgeMapStylingScreen(),
     );
   }
 }
