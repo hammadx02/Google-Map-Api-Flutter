@@ -71,8 +71,9 @@ class _NetworkImageMarkerScreenState extends State<NetworkImageMarkerScreen> {
           ),
           position: _latLang[i],
           icon: BitmapDescriptor.fromBytes(resizedMarkerImageBytes),
-          anchor: Offset(.1, .1),
+          anchor: const Offset(.1, .1),
           infoWindow: InfoWindow(
+            // ignore: prefer_interpolation_to_compose_strings
             title: 'Title of marker' + i.toString(),
           ),
         ),
